@@ -58,7 +58,7 @@
 ### Langkah 1 — Clone repository
 
 ```bash
-git clone https://github.com/NAMA_KAMU/asciify.git
+git clone https://github.com/Nugikku/video-ascii-converter.git
 cd asciify
 ```
 
