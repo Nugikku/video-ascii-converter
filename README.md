@@ -141,32 +141,6 @@ asciify/
 
 ---
 
-## Deploy ke Cloud (Gratis)
-
-### Render.com
-
-1. Login di [render.com](https://render.com) pakai akun GitHub
-2. **New +** → **Web Service** → pilih repo `asciify`
-3. Isi konfigurasi:
-
-| Field | Value |
-|---|---|
-| Runtime | Python 3 |
-| Build Command | `pip install -r backend/requirements.txt` |
-| Start Command | `cd backend && python -m uvicorn main:app --host 0.0.0.0 --port $PORT` |
-
-4. Klik **Create Web Service** → tunggu build selesai
-5. Update `const API` di `frontend/js/app.js` dengan URL Render kamu
-
-### Railway.app
-
-1. Login di [railway.app](https://railway.app) pakai akun GitHub
-2. **New Project** → **Deploy from GitHub repo** → pilih `asciify`
-3. Otomatis terbaca dari `railway.json`
-4. **Settings** → **Networking** → **Generate Domain**
-
----
-
 ## Troubleshooting
 
 **Tampilan CSS tidak muncul**
