@@ -25,8 +25,13 @@ FRONTEND_DIR = BASE_DIR / "frontend"
 app.mount("/css", StaticFiles(directory=str(FRONTEND_DIR / "css")), name="css")
 app.mount("/js",  StaticFiles(directory=str(FRONTEND_DIR / "js")),  name="js")
 
-UPLOAD_DIR = "temp/uploads"
-OUTPUT_DIR = "temp/outputs"
+# Pakai path absolut agar jalan di lokal maupun cloud
+UPLOAD_DIR = str(pathlib.Path(__file__).parent / "temp" / "uploads")
+OUTPUT_DIR = str(pathlib.Path(__file__).parent / "temp" / "outputs")
+
+# Buat folder otomatis kalau belum ada
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 MAX_DURATION = 30
 MAX_FILE_SIZE = 100 * 1024 * 1024
 
