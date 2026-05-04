@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ASCIIfy — Video to ASCII Converter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<!-- Background grid noise -->
+<div class="bg-grid"></div>
+<div class="scanlines"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <span class="logo-bracket">[</span>
+    ASCIIfy
+    <span class="logo-bracket">]</span>
+  </div>
+  <nav class="header-tags">
+    <span>// VIDEO_TO_ASCII</span>
+    <span class="dot"></span>
+    <span>v1.0.0</span>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">// CONVERT YOUR VIDEO</div>
+  <h1 class="hero-title">
+    Turn Any Video<br/>
+    Into <span class="accent">ASCII Art</span>
+  </h1>
+  <p class="hero-sub">Upload video kamu, atur settings, dan download hasilnya dalam format MP4. Perfect untuk konten creator & editor.</p>
+</section>
+
+<!-- MAIN APP -->
+<main class="app-container">
+
+  <!-- STEP 1: UPLOAD -->
+  <section class="step" id="step-upload">
+    <div class="step-header">
+      <span class="step-num">01</span>
+      <span class="step-title">Upload Video</span>
+      <span class="step-note">MP4 / MOV / AVI / WEBM · Max 30 detik · Max 100MB</span>
+    </div>
+
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="video/mp4,video/quicktime,video/x-msvideo,video/webm" hidden />
+      <div class="upload-icon">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <path d="M24 32V16M24 16L17 23M24 16L31 23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p class="upload-text">Drag & drop video di sini</p>
+      <p class="upload-sub">atau</p>
+      <button class="btn-outline" onclick="document.getElementById('fileInput').click()">Pilih File</button>
+    </div>
+
+    <!-- File info setelah upload -->
+    <div class="file-info hidden" id="fileInfo">
+      <div class="file-icon">▶</div>
+      <div class="file-details">
+        <span class="file-name" id="fileName">—</span>
+        <span class="file-meta" id="fileMeta">—</span>
+      </div>
+      <button class="btn-icon" id="btnRemove" title="Hapus">✕</button>
+    </div>
+  </section>
+
+  <!-- STEP 2: SETTINGS -->
+  <section class="step" id="step-settings">
+    <div class="step-header">
+      <span class="step-num">02</span>
+      <span class="step-title">Pengaturan</span>
+    </div>
+
+    <div class="settings-grid">
+
+      <div class="setting-item">
+        <label class="setting-label">Resolusi Karakter</label>
+        <p class="setting-desc">Jumlah karakter per baris — makin besar makin detail (dan makin lama)</p>
+        <div class="btn-group" id="settingWidth">
+          <button class="btn-choice" data-val="80">80 <span>Ringan</span></button>
+          <button class="btn-choice active" data-val="100">100 <span>Standar</span></button>
+          <button class="btn-choice" data-val="120">120 <span>Detail</span></button>
+          <button class="btn-choice" data-val="150">150 <span>Ultra</span></button>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <label class="setting-label">Mode Warna</label>
+        <p class="setting-desc">Berwarna menggunakan warna asli video, Monokrom untuk estetika klasik</p>
+        <div class="btn-group" id="settingColor">
+          <button class="btn-choice active" data-val="true">🎨 Berwarna</button>
+          <button class="btn-choice" data-val="false">⬜ Monokrom</button>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <label class="setting-label">Output FPS</label>
+        <p class="setting-desc">Frame per detik video hasil — lebih tinggi = lebih mulus, file lebih besar</p>
+        <div class="btn-group" id="settingFps">
+          <button class="btn-choice" data-val="10">10 fps</button>
+          <button class="btn-choice active" data-val="15">15 fps</button>
+          <button class="btn-choice" data-val="24">24 fps</button>
+          <button class="btn-choice" data-val="30">30 fps</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STEP 3: CONVERT -->
+  <section class="step" id="step-convert">
+    <div class="step-header">
+      <span class="step-num">03</span>
+      <span class="step-title">Konversi</span>
+    </div>
+
+    <button class="btn-convert" id="btnConvert" disabled>
+      <span class="btn-convert-text">▶ Mulai Konversi</span>
+    </button>
+
+    <!-- Progress -->
+    <div class="progress-container hidden" id="progressContainer">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="progress-info">
+        <span class="progress-pct" id="progressPct">0%</span>
+        <span class="progress-status" id="progressStatus">Memproses frame...</span>
+      </div>
+      <div class="progress-log" id="progressLog"></div>
+    </div>
+
+  </section>
+
+  <!-- STEP 4: RESULT -->
+  <section class="step hidden" id="step-result">
+    <div class="step-header">
+      <span class="step-num">04</span>
+      <span class="step-title">Hasil Konversi</span>
+    </div>
+
+    <div class="result-container">
+      <div class="result-preview">
+        <video id="resultVideo" controls loop autoplay muted></video>
+        <div class="result-overlay">
+          <span>PREVIEW</span>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <div class="result-stats" id="resultStats"></div>
+        <button class="btn-download" id="btnDownload">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download MP4
+        </button>
+        <button class="btn-outline-sm" id="btnReset">↺ Konversi Video Lain</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ERROR TOAST -->
+<div class="toast hidden" id="toast">
+  <span id="toastMsg">—</span>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>ASCIIfy — ASCII Video Converter</span>
+  <span>Built with Python · FastAPI · OpenCV</span>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
