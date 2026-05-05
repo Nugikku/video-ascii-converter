@@ -59,7 +59,7 @@
 
 ```bash
 git clone https://github.com/Nugikku/video-ascii-converter.git
-cd asciify
+cd video-ascii-converter
 ```
 
 ### Langkah 2 — Install dependencies
@@ -83,7 +83,9 @@ http://localhost:8000
 
 > Jangan tutup terminal selama menggunakan website!
 
----
+```
+hctrl + c
+```
 
 ## Cara Pakai
 
