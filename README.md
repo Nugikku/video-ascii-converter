@@ -133,9 +133,7 @@ asciify/
 │   ├── index.html
 │   ├── css/style.css
 │   └── js/app.js
-├── render.yaml          ← Konfigurasi Render.com
-├── railway.json         ← Konfigurasi Railway.app
-├── Procfile
+├── .gitignore           ← Konfigurasi menyimpann folder temp
 └── README.md
 ```
 
