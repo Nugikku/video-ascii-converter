@@ -69,7 +69,7 @@ cd backend
 pip install -r requirements.txt
 ```
 
-### Langkah 3 — Jalankan server
+### Langkah 3 — Jalankan server (masuk ke folder backend)
 
 ```bash
 python -m uvicorn main:app --reload --port 8000
